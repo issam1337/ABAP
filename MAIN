@@ -1,0 +1,63 @@
+*&---------------------------------------------------------------------*
+*& Report  ZREPORT_NAME
+*&---------------------------------------------------------------------*
+************************************************************************
+* PROGRAMME   :   ZREPORT_NAME                               *
+************************************************************************
+* DESCRIPTION :   ADVANCED ABAP EXERCICE                *
+*----------------------------------------------------------------------*
+* REFERENCES:                                                          *
+*    Créé le                    :  14/03/2024                          *
+*   Auteur                      :  ISSAM FADILI                        *
+*    Document de référence      :                                      *
+*    Ordre                      :  	                                   *
+*----------------------------------------------------------------------*
+*                     Liste des modifications                          *
+*----------------------------------------------------------------------*
+* Date: -------        Nom : ----------------                          *
+* Ordre: ----------    ID : Mxx                                        *
+* Désignation :                                                        *
+*----------------------------------------------------------------------*
+
+REPORT ZIFA_ADVANCED.
+
+*-------------------------------------------------
+*                I N C L U D E S
+*-------------------------------------------------
+INCLUDE : ZIFA_ADVANCED_top,
+          ZIFA_ADVANCED_f01.
+
+*-------------------------------------------------
+*      I N I T I A L I Z A T I O N
+*-------------------------------------------------
+INITIALIZATION.
+PERFORM inialize_data.
+*-------------------------------------------------
+*      A T   S E L E C T I O N - S C R E E N
+*-------------------------------------------------
+AT SELECTION-SCREEN on VALUE-REQUEST FOR p_adress.
+CALL FUNCTION 'F4_FILENAME'
+ EXPORTING
+*   PROGRAM_NAME        = SYST-CPROG
+*   DYNPRO_NUMBER       = SYST-DYNNR
+   FIELD_NAME          = 'P_ADRESS'
+ IMPORTING
+   FILE_NAME           = p_adress
+          .
+
+*-------------------------------------------------
+*      S T A R T   O F   S E L E C T I O N
+*-------------------------------------------------
+START-OF-SELECTION.
+PERFORM GET_DATA.
+*PERFORM COLLECT_DATA.
+*-------------------------------------------------
+*      E N D   O F   S E L E C T I O N
+*-------------------------------------------------
+END-OF-SELECTION.
+PERFORM proccess_data.
+*PERFORM write_file.
+PERFORM write_file_local.
+*PERFORM read_file.
+*PERFORM read_file_local.
+PERFORM DISPLAY_DATA.
